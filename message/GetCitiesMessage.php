@@ -47,6 +47,11 @@ class GetCitiesMessage extends BaseXmlMessage
     public function buildResponse(SimpleXMLElement $response)
     {
         $result = [];
+
+        if (! ($response->City->Cities instanceof \SimpleXMLElement)) {
+            return $result;
+        }
+
         foreach($response->City->Cities as $city) {
             $result[] = self::xmlNode2Type($city, City::className());
         }

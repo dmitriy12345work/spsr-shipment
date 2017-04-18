@@ -29,7 +29,7 @@ use SimpleXMLElement;
  */
 class TariffMessage extends BaseMessage
 {
-    static $url = 'http://www.cpcr.ru/cgi-bin/postxml.pl';
+    static $url = 'http://spsr.ru/tarifcalc/?fn=';
 
     /**
      * Документы и печатная продукция
@@ -116,13 +116,19 @@ class TariffMessage extends BaseMessage
         return false;
     }
 
+    // для тестового аккаунта выдает ошибку, по этому отключено
+    public function isRequiredICN()
+    {
+        return false;
+    }
+
     /**
      * Return tariff request url
      * @return string
      */
     public function getRequestUrl()
     {
-        $url = self::$url . '?TARIFFCOMPUTE_2&';
+        $url = self::$url . 'TARIFFCOMPUTE_2&';
         if ($this->_dataRaw) {
             $url .= http_build_query($this->_dataRaw);
         }

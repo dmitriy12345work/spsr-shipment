@@ -14,7 +14,7 @@ use SimpleXMLElement;
  * @property float|null $TotalCOD Сумма наложенного платежа в рублях по накладным с дополнительной услугой "Оплата товара в момент вручения". Если заданы значения атрибутов и TotalCOD и Cost, то значение атрибута TotalCOD игнорируется
  * @property int|null $TotalPieces Общее количество вложимых во всех накладных
  * @property float|null $TotalWeight Общий вес (в кг) всех вложимых во всех накладных
- * @property InvoiceType[] $Invoices Общий вес (в кг) всех вложимых во всех накладных
+ * @property InvoiceType[] $Invoices Массив заказов
  *
  */
 class InvoiceMessage extends BaseXmlMessage

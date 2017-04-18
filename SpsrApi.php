@@ -57,6 +57,10 @@ class SpsrApi
      */
     public function session()
     {
+        if ($this->sid) {
+            return $this->sid;
+        }
+
         if ($this->login && $this->password) {
             $agent = $this->companyAgent;
             $login = $this->login;
@@ -107,8 +111,10 @@ class SpsrApi
      */
     public function request(BaseMessage $message, $sid = null)
     {
-        $sid || $sid = $this->session();
-        $message->setSid($sid);
+        if( ! ($message instanceof TariffMessage)) {
+            $sid || $sid = $this->session();
+            $message->setSid($sid);
+        }
         $icnAttr = $message->isRequiredICN();
         $icnAttr && !$message->$icnAttr && $message->$icnAttr = $this->icn;
         $loginAttr = $message->isRequiredLogin();
