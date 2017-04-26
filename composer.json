@@ -1,8 +1,8 @@
 {
-    "name": "stp/spsr-shipment",
+    "name": "dmitriy12345work/spsr-shipment",
     "description": "API for SPSR-EXPRESS shipping",
     "keywords": ["api", "shipping", "delivery", "shipments", "spsr"],
-    "homepage": "https://github.com/AStepanov/spsr-shipment",
+    "homepage": "https://github.com/dmitriy12345work/spsr-shipment",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -24,7 +24,7 @@
     "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
-            "stp\\spsr\\": ""
+            "dmitriy12345work\\spsr\\": ""
         }
     }
 }
