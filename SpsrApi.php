@@ -85,6 +85,9 @@ class SpsrApi
 
     public function _request($url, $postData = null)
     {
+
+//print($postData . "\n\n");
+
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
         if ($postData) {
@@ -92,6 +95,7 @@ class SpsrApi
             curl_setopt($curl, CURLOPT_POSTFIELDS, $postData);
         }
         curl_setopt_array($curl, $this->options);
+
         $result = curl_exec($curl);
         if ($result === false) {
             $err = curl_error($curl);
@@ -100,6 +104,9 @@ class SpsrApi
         }
         curl_close($curl);
         libxml_use_internal_errors(true);
+
+//    var_dump($result);
+
         $xmlResult = new SimpleXMLElement($result);
         return $xmlResult;
     }
@@ -111,6 +118,7 @@ class SpsrApi
      */
     public function request(BaseMessage $message, $sid = null)
     {
+        // это нормально, если у вашего аккаунта нет скидок, а если есть, то можно и передать $sid
         if( ! ($message instanceof TariffMessage)) {
             $sid || $sid = $this->session();
             $message->setSid($sid);

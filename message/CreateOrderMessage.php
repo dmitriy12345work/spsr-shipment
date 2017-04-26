@@ -9,7 +9,7 @@ use SimpleXMLElement;
 /**
  * @property string $ICN ИКН
  * @property string $Login логин
- * @property string $NecesseryDate дата сбора, YYYY-MM-DDT00:00:00.000,
+ * @property string $NecesseryDate дата сбора, YYYY-MM-DDT00:00:00.000
  * @property string $NecesseryTime время сбора, see self::NECESSERY_TIME_*
  * @property int $DeliveryMode идентификатор вида сервиса для доставки собираемого отправления, (from WAGetServices)
  * @property string $FIO ФИО отправителя

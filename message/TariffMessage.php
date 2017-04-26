@@ -12,7 +12,7 @@ use SimpleXMLElement;
  * @property string $Weight Вес отправления, кг (граммы указываются через точку) – наибольшее значение между физическим и объемным весом
  * @property int|null $Nature Характер груза, см. TariffMessage::TYPE_*
  * @property string|null $Amount Оценочная стоимость, руб (Используется совместно с параметром AmountCheck)
- * @property int|null $AmountCheck Значение Amount по страхованию объявления или тариф за объявленную стоимость. см. INSURANCE_*
+ * @property int|null $AmountCheck Значение Amount по страхованию объявления или тариф за объявленную стоимость. см. INSURANCE_*, 1 - страхование объявления 0 - тариф за объявленную стоимость
  * @property int|null $SMS CМС оповещение отправителя, 0 – нет, 1 – да
  * @property int|null $SMS_Recv CМС оповещение получателя, 0 – нет, 1 – да
  * @property int|null $PlatType Кто платит (по умолчанию отправитель) см. TariffMessage::PAY_BY_*
