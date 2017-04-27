@@ -24,7 +24,7 @@
     "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
-            "stp\\spsr\\": ""
+            "dmitriy12345work\\spsr\\": ""
         }
     }
 }
