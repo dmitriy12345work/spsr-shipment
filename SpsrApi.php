@@ -21,6 +21,7 @@ class SpsrApi
     protected $password = null;
     protected $sid = null;
     protected $icn = null;
+    protected $testMode = true;
 
     protected $options = [
         CURLOPT_RETURNTRANSFER => 1,
@@ -43,6 +44,7 @@ class SpsrApi
         $this->icn = $icn;
         $this->password = $password;
         $this->xmlUrl = $testMode ? self::_TEST_URL : self::_URL;
+        $this->testMode = $testMode;
     }
 
     public function setSid($sid)
@@ -118,11 +120,8 @@ class SpsrApi
      */
     public function request(BaseMessage $message, $sid = null)
     {
-        // это нормально, если у вашего аккаунта нет скидок, а если есть, то можно и передать $sid
-        if( ! ($message instanceof TariffMessage)) {
-            $sid || $sid = $this->session();
-            $message->setSid($sid);
-        }
+        $sid || $sid = $this->session();
+        $message->setSid($sid);
         $icnAttr = $message->isRequiredICN();
         $icnAttr && !$message->$icnAttr && $message->$icnAttr = $this->icn;
         $loginAttr = $message->isRequiredLogin();
@@ -131,6 +130,14 @@ class SpsrApi
         if ($message instanceof BaseXmlMessage) {
             $response = $this->_request($this->xmlUrl, $message->asXml()->asXML());
         } elseif($message instanceof TariffMessage) {
+            # special prices only in real environment
+            if ($sid && $message->ICN && ! $this->testMode) {
+                $message->SID = $sid;
+            } else {
+                $message->ICN = null;
+                $message->SID = null;
+            }
+
             $response = $this->_request($message->getRequestUrl());
         } else {
             new SpsrException('Not implemented');
