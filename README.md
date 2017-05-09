@@ -65,12 +65,12 @@ For more information, see [USAGE.md](USAGE.md)
 - [ ] WANewInvoicesByFile
 - [ ] WAInvSessionInfo
 - [ ] WAGetExtMon
-- [ ] WAGetServices
+- [x] [WAGetServices](message/GetServicesMessage.php)
 - [ ] WAGetStreet
 - [ ] WAGetEncloseType
-- [ ] WAAddAddress
+- [x] [WAAddAddress](message/AddAddressMessage.php)
 - [ ] WAEditAddress
-- [ ] WADelAddress
+- [x] [WADelAddress](message/DelAddressMessage.php)
 - [ ] WAGetOrders
 - [ ] WACancelOrder
 - [ ] WACheckGetQuotaByAddress

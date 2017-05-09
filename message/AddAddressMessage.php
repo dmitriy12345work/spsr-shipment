@@ -3,7 +3,6 @@
 namespace stp\spsr\message;
 
 use stp\spsr\response\AddAddressResponse;
-use stp\spsr\response\AddOrder;
 use SimpleXMLElement;
 
 
