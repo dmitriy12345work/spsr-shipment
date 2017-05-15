@@ -8,13 +8,21 @@ class BaseMessage extends BaseType
 {
     protected $sid;
 
+    // useful for logging in external application
+    /** @var string */
+    protected $rawXml;
+
     /**
      * Set Session ID
-     * @param string $sid
+     * @param $sid
+     *
+     * @return $this
      */
     public function setSid($sid)
     {
         $this->sid = $sid;
+
+        return $this;
     }
 
     public function isRequiredICN()
@@ -27,4 +35,15 @@ class BaseMessage extends BaseType
         return 'Login';
     }
 
+    public function setRawXml($rawXml)
+    {
+        $this->rawXml = $rawXml;
+
+        return $this;
+    }
+
+    public function getRawXml()
+    {
+        return $this->rawXml;
+    }
 }

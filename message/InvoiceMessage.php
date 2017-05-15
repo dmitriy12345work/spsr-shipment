@@ -5,6 +5,7 @@ namespace stp\spsr\message;
 use stp\spsr\response\Invoice;
 use stp\spsr\type\InvoiceType;
 use SimpleXMLElement;
+use stp\spsr\type\MessageType;
 
 /**
  * @property int $ContractNumber ICN
@@ -77,7 +78,12 @@ class InvoiceMessage extends BaseXmlMessage
     {
         $result = [];
         foreach($response->Invoice as $invoice) {
-            $result[] = self::xmlNode2Type($invoice, Invoice::className());
+            /** @var Invoice $invoiceTmp */
+            $invoiceTmp = self::xmlNode2Type($invoice, Invoice::className());
+            if ($invoice->Message) {
+                $invoiceTmp->Message = self::xmlNode2Type($invoice->Message, MessageType::className());
+            }
+            $result[] = $invoiceTmp;
         }
 
         return $result;

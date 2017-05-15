@@ -70,7 +70,7 @@ class SpsrApi
             $xml = "<root xmlns=\"http://spsr.ru/webapi/usermanagment/login/1.0\">
                     <p:Params Name=\"WALogin\" Ver=\"1.0\" xmlns:p=\"http://spsr.ru/webapi/WA/1.0\" />
                     <Login  Login=\"$login\" Pass=\"$password\" UserAgent=\"$agent\" /></root>";
-            $response = $this->_request($this->xmlUrl, $xml);
+            list($response, $rawXml) = $this->_request($this->xmlUrl, $xml);
             $response->Login && $this->sid = (string)$response->Login['SID'];
             if (!$this->sid) {
                 $errMsg = $response->error ? (string)$response->error['ErrorMessageRU'] : '';
@@ -85,7 +85,7 @@ class SpsrApi
         return $this->sid;
     }
 
-    public function _request($url, $postData = null)
+    private function _request($url, $postData = null)
     {
 
 //print($postData . "\n\n");
@@ -110,13 +110,15 @@ class SpsrApi
 //    var_dump($result);
 
         $xmlResult = new SimpleXMLElement($result);
-        return $xmlResult;
+
+        return [$xmlResult, $result];
     }
 
     /**
      * @param BaseMessage $message
      * @param string|null $sid session id
      * @return BaseResponse|BaseResponse[]
+     * @throws \stp\spsr\SpsrException
      */
     public function request(BaseMessage $message, $sid = null)
     {
@@ -127,9 +129,10 @@ class SpsrApi
         $loginAttr = $message->isRequiredLogin();
         $loginAttr && !$message->$loginAttr && $message->$loginAttr = $this->login;
         $response = null;
+
         if ($message instanceof BaseXmlMessage) {
-            $response = $this->_request($this->xmlUrl, $message->asXml()->asXML());
-        } elseif($message instanceof TariffMessage) {
+            list($response, $rawXml) = $this->_request($this->xmlUrl, $message->asXml()->asXML());
+        } elseif ($message instanceof TariffMessage) {
             # special prices only in real environment
             if ($sid && $message->ICN && ! $this->testMode) {
                 $message->SID = $sid;
@@ -138,12 +141,14 @@ class SpsrApi
                 $message->SID = null;
             }
 
-            $response = $this->_request($message->getRequestUrl());
+            list($response, $rawXml) = $this->_request($message->getRequestUrl());
         } else {
-            new SpsrException('Not implemented');
+            throw new SpsrException('Not implemented request for ' . get_class($message));
         }
 
+        $message->setRawXml($rawXml);
         $this->checkError($response);
+
         return $message->buildResponse($response);
     }
 
