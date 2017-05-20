@@ -63,6 +63,8 @@ class GetInvoiceInfoMessage extends BaseXmlMessage
             $invoice = self::xmlNode2Type($invoiceInfo, InvoiceInfo::className());
             $invoice->Shipper = self::xmlNode2Type($invoiceInfo->Shipper, ShipperType::className());
             $invoice->Receiver = self::xmlNode2Type($invoiceInfo->Receiver, ReceiverType::className());
+//            $invoice->SMS; // @TODO
+//            $invoice->SubPieces; // @TODO
             foreach($invoiceInfo->Pieces->Piece as $piece) {
                 $invoice->push('Pieces', self::xmlNode2Type($piece, PieceType::className()));
             }

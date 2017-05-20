@@ -3,6 +3,7 @@
 namespace stp\spsr\type;
 
 use stp\spsr\BaseType;
+use stp\spsr\type\SubPieceType;
 
 /**
  * @property int|null $PieceID Штрихкод вложимого из диапазона, выделенного ООО "СПСР-Экспресс", начинается с "20"
@@ -12,6 +13,7 @@ use stp\spsr\BaseType;
  * @property float $Length Длина вложимого в см
  * @property float $Width Ширина вложимого в см
  * @property float $Depth Высота вложимого в см
+ * @property SubPieceType $SubPiece Информация по одному субвложимому (товару)
  */
 class PieceType extends BaseType
 {
