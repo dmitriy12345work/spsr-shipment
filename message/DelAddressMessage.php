@@ -30,15 +30,6 @@ class DelAddressMessage extends BaseXmlMessage
     }
 
     /**
-     * Return XML method string and version, e.g. 1.0
-     * @return string
-     */
-    public function getMethodVersion()
-    {
-        return '1.0';
-    }
-
-    /**
      * @return \stp\spsr\response\DelAddressResponse
      */
     public function buildResponse(SimpleXMLElement $response)

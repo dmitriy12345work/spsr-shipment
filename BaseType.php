@@ -35,6 +35,14 @@ class BaseType
         array_push($this->_dataRaw[$name], $value);
     }
 
+    public function getSprsNodeName()
+    {
+        $fullName = substr(get_called_class(), 0, -4);
+        $nodeName = explode('\\', $fullName);
+
+        return end($nodeName);
+    }
+
     /**
      *
      * @param string|null $forceXmlNs
@@ -43,9 +51,7 @@ class BaseType
     public function asXml($forceXmlNs = null)
     {
         $xmlNs = $forceXmlNs ? "xmlns=\"$forceXmlNs\"" : '';
-        $fullName = substr(get_called_class(), 0, -4);
-        $nodeName = explode('\\', $fullName);
-        $nodeName = end($nodeName);
+        $nodeName = $this->getSprsNodeName();
         $xml = new SimpleXMLElement("<$nodeName $xmlNs />");
         foreach($this->_dataRaw as $attr => $value) {
             if (is_scalar($value)) {

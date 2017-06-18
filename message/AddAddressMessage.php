@@ -37,15 +37,6 @@ class AddAddressMessage extends BaseXmlMessage
     }
 
     /**
-     * Return XML method string and version, e.g. 1.0
-     * @return string
-     */
-    public function getMethodVersion()
-    {
-        return '1.0';
-    }
-
-    /**
      * @return AddAddressResponse
      */
     public function buildResponse(SimpleXMLElement $response)

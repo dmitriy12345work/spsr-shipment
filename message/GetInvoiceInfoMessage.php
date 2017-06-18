@@ -4,6 +4,7 @@ namespace stp\spsr\message;
 
 use stp\spsr\BaseType;
 use stp\spsr\response\InvoiceInfo;
+use stp\spsr\response\MonitoringInvoiceInfo;
 use stp\spsr\SpsrException;
 use stp\spsr\type\InvoiceInfoType;
 use stp\spsr\type\ShipperType;
@@ -16,7 +17,6 @@ use SimpleXMLElement;
  * @property string $Login
  * @property string $ICN
  * @property InvoiceInfoType[] $InvoiceInfo
- * string|null $BarCode
  */
 class GetInvoiceInfoMessage extends BaseXmlMessage
 {
@@ -71,6 +71,16 @@ class GetInvoiceInfoMessage extends BaseXmlMessage
             $result[] = $invoice;
         }
 
+        // Error objects have non empty ErrorCode/ErrorMessage property
+        if ($response->NotFound->Invoice instanceof \SimpleXMLElement) {
+            foreach($response->NotFound->Invoice as $invoiceNotFound) {
+                /** @var MonitoringInvoiceInfo $invoice */
+                $invoice = self::xmlNode2Type($invoiceNotFound, MonitoringInvoiceInfo::className());
+
+                $result[] = $invoice;
+            }
+        }
+
         return $result;
     }
 
@@ -85,12 +95,17 @@ class GetInvoiceInfoMessage extends BaseXmlMessage
      */
     public function addInvoice($InvoiceNumber = null, $GCInvoiceNumber = null, $BarCode = null)
     {
-        if (!$InvoiceNumber && !$GCInvoiceNumber && !$BarCode) return false;
+        if (!$InvoiceNumber && !$GCInvoiceNumber && !$BarCode) {
+            return false;
+        }
         $invoiceInfo = new InvoiceInfoType();
-        $InvoiceNumber && $invoiceInfo->InvoiceNumber = $InvoiceNumber;
+
+        $InvoiceNumber   && $invoiceInfo->InvoiceNumber = $InvoiceNumber;
         $GCInvoiceNumber && $invoiceInfo->GCInvoiceNumber = $GCInvoiceNumber;
-        $BarCode && $invoiceInfo->BarCode = $BarCode;
+        $BarCode         && $invoiceInfo->BarCode = $BarCode;
+
         $this->push('InvoiceInfo', $invoiceInfo);
+
         return true;
     }
 }
