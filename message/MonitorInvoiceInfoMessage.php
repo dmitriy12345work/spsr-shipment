@@ -59,8 +59,11 @@ class MonitorInvoiceInfoMessage extends BaseXmlMessage
             foreach($response->Invoices->Invoice as $invoiceInfo) {
                 /** @var MonitoringInvoiceInfo $invoice */
                 $invoice = self::xmlNode2Type($invoiceInfo, MonitoringInvoiceInfo::className());
-                foreach($invoiceInfo->events->event as $event) {
-                    $invoice->push('events', self::xmlNode2Type($event, EventType::className()));
+
+                if ($invoiceInfo->events->event instanceof \SimpleXMLElement) {
+                    foreach($invoiceInfo->events->event as $event) {
+                        $invoice->push('events', self::xmlNode2Type($event, EventType::className()));
+                    }
                 }
 
                 $result[] = $invoice;

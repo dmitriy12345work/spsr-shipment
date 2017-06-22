@@ -20,7 +20,7 @@ use stp\spsr\type\EventType;
  * @property integer $PaymentType Тип оплаты (для отправлений со статусом "Доставлено")
  * 0 - оплата наличными в момент получения, 1 - оплата картой в момент получения, 2 - предоплаченный заказ
  *
- * @property EventType $events информация об отправителе
+ * @property EventType[] $events|null лог событий отправления
  */
 class MonitoringInvoiceInfo extends BaseResponse
 {
