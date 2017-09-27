@@ -80,3 +80,8 @@ For more information, see [USAGE.md](USAGE.md)
 
 
 ## Pull requests are very welcome!
+
+Documentation russian:
+[SPSR.WebApi.IntegrationDocs.v.1.3.38.zip](http://www.filehosting.org/file/details/696061/SPSR.WebApi.IntegrationDocs.v.1.3.38.zip)
+Documentation english:
+[SPSR.WebApi.IntegrationDocs.v.1.3.38Eng.zip](http://www.filehosting.org/file/details/696060/SPSR.WebApi.IntegrationDocs.v.1.3.38Eng.zip)
